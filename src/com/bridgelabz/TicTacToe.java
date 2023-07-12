@@ -114,13 +114,13 @@ public class TicTacToe {
     }
 
     public void computerMove() {
-        // Generate a random row and column until an empty cell is found
         Random random = new Random();
         int row = random.nextInt(3);
         int col = random.nextInt(3);
         while (board[row][col] != ' ') {
             row = random.nextInt(3);
             col = random.nextInt(3);
+
         }
 
         board[row][col] = currentPlayer;
