@@ -1,11 +1,12 @@
 package com.bridgelabz;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
-    private char[][] board;
-    private char currentPlayer;
-    private boolean gameOver;
+    public char[][] board;
+    public char currentPlayer;
+    public boolean gameOver;
 
     public TicTacToe() {
         board = new char[3][3];
@@ -14,7 +15,7 @@ public class TicTacToe {
                 board[i][j] = ' ';
             }
         }
-        currentPlayer = 'X';
+        currentPlayer = 'X'; // Player X goes first
         gameOver = false;
     }
 
@@ -24,29 +25,18 @@ public class TicTacToe {
 
         while (!game.isGameOver()) {
             game.displayBoard();
-            System.out.println("Player " + game.getCurrentPlayer() + ", it's your turn. Choose a row and column to place your symbol (e.g., 1 2):");
-
-            int row, col;
-            try {
-                row = scanner.nextInt();
-                col = scanner.nextInt();
-            } catch (Exception e) {
-                System.out.println("Invalid input. Please enter two integers separated by a space.");
-                scanner.nextLine();
-                continue;
-            }
-
-            if (row < 1 || row > 3 || col < 1 || col > 3) {
-                System.out.println("Invalid input. Please enter row and column numbers between 1 and 3.");
-                continue;
-            }
-
-            if (!game.makeMove(row, col)) {
-                continue;
+            if (game.getCurrentPlayer() == 'X') {
+                // Player's turn
+                System.out.println("Player X, please enter your move (row column):");
+                int row = scanner.nextInt();
+                int col = scanner.nextInt();
+                game.makeMove(row, col);
+            } else {
+                // Computer's turn
+                System.out.println("It's the computer's turn...");
+                game.computerMove();
             }
         }
-
-        // Display the final state of the board
         game.displayBoard();
     }
 
@@ -76,14 +66,13 @@ public class TicTacToe {
             System.out.println("It's a tie!");
             gameOver = true;
         } else {
-            // Switch to the other player's turn
             currentPlayer = currentPlayer == 'X' ? 'O' : 'X';
         }
 
         return true;
     }
 
-    private boolean checkWin() {
+    public boolean checkWin() {
         for (int i = 0; i < 3; i++) {
             if (board[i][0] == board[i][1] && board[i][0] == board[i][2] && board[i][0] != ' ') {
                 return true;
@@ -104,7 +93,8 @@ public class TicTacToe {
         return false;
     }
 
-    private boolean checkTie() {
+    public boolean checkTie() {
+        // Check if there are any empty cells left on the board
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == ' ') {
@@ -122,5 +112,28 @@ public class TicTacToe {
     public char getCurrentPlayer() {
         return currentPlayer;
     }
-}
 
+    public void computerMove() {
+        // Generate a random row and column until an empty cell is found
+        Random random = new Random();
+        int row = random.nextInt(3);
+        int col = random.nextInt(3);
+        while (board[row][col] != ' ') {
+            row = random.nextInt(3);
+            col = random.nextInt(3);
+        }
+
+        board[row][col] = currentPlayer;
+
+        if (checkWin()) {
+            System.out.println("Sorry, the computer wins!");
+            gameOver = true;
+        } else if (checkTie()) {
+            System.out.println("It's a tie!");
+            gameOver = true;
+        } else {
+            // Switch to the other player's turn
+            currentPlayer = currentPlayer == 'X' ? 'O' : 'X';
+        }
+    }
+}
