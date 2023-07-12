@@ -1,5 +1,7 @@
 package com.bridgelabz;
 
+import java.util.Random;
+
 public class TicTacToe {
     private char[][] board;
     private String player1Symbol;
@@ -9,6 +11,7 @@ public class TicTacToe {
     public static void main(String[] args) {
         game.gameBoard();
         game.chooseLetter();
+        game.coinToss();
     }
 
     public void gameBoard() {
@@ -33,6 +36,15 @@ public class TicTacToe {
 
         System.out.println("Player 1's symbol: " + player1Symbol);
         System.out.println("Player 2's symbol: " + player2Symbol);
+    }
+    public void coinToss(){
+        Random rand = new Random();
+        int tossResult = rand.nextInt(2);
+        if (tossResult == 0) {
+            System.out.println("Heads! Player 1 goes first.");
+        } else {
+            System.out.println("Tails! Player 2 goes first.");
+        }
     }
 }
 
