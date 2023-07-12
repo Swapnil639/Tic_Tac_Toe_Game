@@ -122,7 +122,6 @@ public class TicTacToe {
             col = random.nextInt(3);
 
         }
-
         board[row][col] = currentPlayer;
 
         if (checkWin()) {
