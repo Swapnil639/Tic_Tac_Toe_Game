@@ -2,10 +2,13 @@ package com.bridgelabz;
 
 public class TicTacToe {
     private char[][] board;
+    private String player1Symbol;
+    private String player2Symbol;
+    static TicTacToe game = new TicTacToe();
 
     public static void main(String[] args) {
-        TicTacToe game = new TicTacToe();
         game.gameBoard();
+        game.chooseLetter();
     }
 
     public void gameBoard() {
@@ -19,4 +22,17 @@ public class TicTacToe {
         }
     }
 
+    public void chooseLetter() {
+        if (Math.random() < 0.5) {
+            player1Symbol = "X";
+            player2Symbol = "O";
+        } else {
+            player1Symbol = "O";
+            player2Symbol = "X";
+        }
+
+        System.out.println("Player 1's symbol: " + player1Symbol);
+        System.out.println("Player 2's symbol: " + player2Symbol);
+    }
 }
+
